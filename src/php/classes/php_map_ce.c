@@ -287,7 +287,11 @@ METHOD(xor)
 
 METHOD(getIterator) {
     PARSE_NONE;
+#if PHP_VERSION_ID < 80000
     ZVAL_COPY(return_value, getThis());
+#else
+    zend_create_internal_iterator_zval(return_value, ZEND_THIS);
+#endif
 }
 
 METHOD(offsetExists)

@@ -87,7 +87,11 @@ METHOD(jsonSerialize)
 
 METHOD(getIterator) {
     PARSE_NONE;
+#if PHP_VERSION_ID < 80000
     ZVAL_COPY(return_value, getThis());
+#else
+    zend_create_internal_iterator_zval(return_value, ZEND_THIS);
+#endif
 }
 
 void php_ds_register_priority_queue()
